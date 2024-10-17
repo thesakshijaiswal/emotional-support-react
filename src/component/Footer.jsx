@@ -3,6 +3,7 @@ import speed from "../assets/footer/speed.png";
 import play from "../assets/footer/play.png";
 import replay from "../assets/footer/replay.png";
 import mute from "../assets/footer/mute.png";
+import unmute from "../assets/footer/unmute.png"; // Add unmute icon
 import pause from "../assets/footer/pause.png";
 import back from "../assets/footer/back.png";
 import next from "../assets/footer/next.png";
@@ -12,6 +13,7 @@ const Footer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isMuted, setIsMuted] = useState(false); // New state for mute
   const audioRef = useRef(null);
 
   // Update the progress bar as the audio plays
@@ -57,6 +59,13 @@ const Footer = () => {
     setDuration(audio.duration);
   };
 
+  // Toggle mute state
+  const handleMuteToggle = () => {
+    const audio = audioRef.current;
+    audio.muted = !isMuted;
+    setIsMuted(!isMuted);
+  };
+
   return (
     <footer className="bg-white h-28 flex justify-between">
       <audio
@@ -70,7 +79,7 @@ const Footer = () => {
         max={duration}
         value={currentTime}
         onChange={handleSeek}
-        className="progressBar w-full absolute -mt-3"
+        className="progressBar absolute w-[93.8%] -mt-3"
       />
       <div className="rightFoot flex ">
         <img src={speed} alt="" className="h-28" />
@@ -84,11 +93,11 @@ const Footer = () => {
           src={replay}
           alt="replay"
           className="h-28"
-          onClick={handleReplay} // Add onClick event for replay
+          onClick={handleReplay}
         />
       </div>
       <div className="bg-[#3a5569] w-0.5"></div>
-      <div className="transcript w-[48%] p-5">
+      <div className="transcript w-[48%] p-5 text-[18px]">
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas id, saepe
         sint fuga qui enim laboriosam deleniti facere necessitatibus. Qui
         numquam ratione illo perspiciatis facilis excepturi veritatis rerum
@@ -96,7 +105,12 @@ const Footer = () => {
       </div>
       <div className="bg-[#3a5569] w-0.5"></div>
       <div className="leftFoot flex items-center">
-        <img src={mute} alt="" className="h-28" />
+        <img
+          src={isMuted ? unmute : mute} // Use mute/unmute icons based on state
+          alt="mute/unmute"
+          className="h-28"
+          onClick={handleMuteToggle} // Add onClick event for mute/unmute
+        />
         <img src={back} alt="" className="h-28" />
         <h2 className="font-semibold text-2xl -mt-8">01/22</h2>
         <img src={next} alt="" className="h-28" />

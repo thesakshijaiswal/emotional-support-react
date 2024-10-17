@@ -3,7 +3,6 @@ import logo from "../assets/navbar/logo.png";
 import resources from "../assets/navbar/resources.png";
 import navigation from "../assets/navbar/navigation.png";
 import exit from "../assets/navbar/exit.png";
-import Page1 from "../pages/Page1";
 
 const Navbar = () => {
   return (
